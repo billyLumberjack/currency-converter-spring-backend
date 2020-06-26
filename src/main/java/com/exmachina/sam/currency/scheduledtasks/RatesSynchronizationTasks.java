@@ -2,7 +2,9 @@ package com.exmachina.sam.currency.scheduledtasks;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.scheduledtasks.helpers.RatesMapper;
