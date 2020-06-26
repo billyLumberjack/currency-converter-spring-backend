@@ -1,10 +1,7 @@
 package com.exmachina.sam.currency.scheduledtasks;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.scheduledtasks.helpers.RatesMapper;
@@ -34,7 +31,7 @@ public class RatesSynchronizationTasks {
 	@Scheduled(fixedRate = 5000)
 	public void ratesSynchronization() {
 		log.info("Synchronizing rates at time {}", dateFormat.format(new Date()));
-
+		List<Rate> ratesToUpdate = new ArrayList<Rate>();
 		ThirdPartyRates updatedThirdPartyRates = restTemplate.getForObject(baseUrl, ThirdPartyRates.class);
 		List<Rate> updatedRates = RatesMapper.mapThirdPartyRatesToRates(updatedThirdPartyRates);
 
@@ -43,11 +40,14 @@ public class RatesSynchronizationTasks {
 					updatedRate.getSource(),
 					updatedRate.getDestination()
 					);
-			System.out.println("");
+
+			if(rateToUpdate.getCoefficient() != updatedRate.getCoefficient()){
+				rateToUpdate.setCoefficient(updatedRate.getCoefficient());
+				ratesToUpdate.add(rateToUpdate);
+			}
 		}
 
-		System.out.println("");
-
+		rateService.saveAll(ratesToUpdate);
 	}
 }
 
