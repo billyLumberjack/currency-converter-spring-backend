@@ -25,4 +25,10 @@ public class RateService implements IRateService {
         Rate rate = repository.findBySourceAndDestination(sourceCurrency, destinationCurrency);
         return rate;
     }
+
+    @Override
+    public List<Rate> saveAll(List<Rate> ratesToSave) {
+        List<Rate> rates = (List<Rate>) repository.saveAll(ratesToSave);
+        return rates;
+    }
 }
