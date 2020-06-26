@@ -2,6 +2,7 @@ package com.exmachina.sam.currency.entities;
 
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "rates")
@@ -9,7 +10,7 @@ public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private BigInteger id;
 
     @Column(name = "source_currency")
     private String source;
@@ -29,11 +30,11 @@ public class Rate {
         this.coefficient = coefficient;
     }
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
