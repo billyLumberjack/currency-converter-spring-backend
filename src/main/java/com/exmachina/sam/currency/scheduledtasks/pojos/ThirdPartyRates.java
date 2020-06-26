@@ -2,8 +2,6 @@ package com.exmachina.sam.currency.scheduledtasks.pojos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ThirdPartyRates {
-	@JsonProperty("BTC")
-	public BitcoinRates bitcoinRates;
-}
+import java.util.LinkedHashMap;
 
+public class ThirdPartyRates extends LinkedHashMap<String , LinkedHashMap<String , Double>> {}
