@@ -20,17 +20,12 @@ public class RatesSynchronizationTasks {
 
 	@Autowired
 	private IRateService rateService;
-
-	private static final Logger log = LoggerFactory.getLogger(RatesSynchronizationTasks.class);
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	private final RestTemplate restTemplate = new RestTemplate();
-
 	private final String baseUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD,EUR&api_key=12e663f7242e98c88435b6d8d939c276da860097834847d645f437c26935acd6";
 
 	@Transactional
 	@Scheduled(fixedRate = 5000)
 	public void ratesSynchronization() {
-		log.info("Synchronizing rates at time {}", dateFormat.format(new Date()));
 		List<Rate> ratesToUpdate = new ArrayList<Rate>();
 		ThirdPartyRates updatedThirdPartyRates = restTemplate.getForObject(baseUrl, ThirdPartyRates.class);
 		List<Rate> updatedRates = RatesMapper.mapThirdPartyRatesToRates(updatedThirdPartyRates);
