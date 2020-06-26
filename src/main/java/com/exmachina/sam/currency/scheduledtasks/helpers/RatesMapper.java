@@ -2,8 +2,6 @@ package com.exmachina.sam.currency.scheduledtasks.helpers;
 
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
