@@ -23,8 +23,7 @@ public class Rate {
     public Rate() {
     }
 
-    public Rate(int id, String sourceCurrency, String destinationCurrency, double coefficient) {
-        this.id = id;
+    public Rate(String sourceCurrency, String destinationCurrency, double coefficient) {
         this.sourceCurrency = sourceCurrency;
         this.destinationCurrency = destinationCurrency;
         this.coefficient = coefficient;
