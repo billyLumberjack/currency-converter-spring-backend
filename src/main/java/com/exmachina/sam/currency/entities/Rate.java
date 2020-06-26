@@ -12,10 +12,10 @@ public class Rate {
     private int id;
 
     @Column(name = "source_currency")
-    private String sourceCurrency;
+    private String source;
 
     @Column(name = "destination_currency")
-    private String destinationCurrency;
+    private String destination;
 
     @Column(name = "coefficient")
     private double coefficient;
@@ -23,9 +23,9 @@ public class Rate {
     public Rate() {
     }
 
-    public Rate(String sourceCurrency, String destinationCurrency, double coefficient) {
-        this.sourceCurrency = sourceCurrency;
-        this.destinationCurrency = destinationCurrency;
+    public Rate(String source, String destination, double coefficient) {
+        this.source = source;
+        this.destination = destination;
         this.coefficient = coefficient;
     }
 
@@ -37,20 +37,20 @@ public class Rate {
         this.id = id;
     }
 
-    public String getSourceCurrency() {
-        return sourceCurrency;
+    public String getSource() {
+        return source;
     }
 
-    public void setSourceCurrency(String sourceCurrency) {
-        this.sourceCurrency = sourceCurrency;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public String getDestinationCurrency() {
-        return destinationCurrency;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setDestinationCurrency(String destinationCurrency) {
-        this.destinationCurrency = destinationCurrency;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public double getCoefficient() {
@@ -65,8 +65,8 @@ public class Rate {
     public String toString() {
         return "Rate{" +
                 "id=" + id +
-                ", sourceCurrency='" + sourceCurrency + '\'' +
-                ", destinationCurrency='" + destinationCurrency + '\'' +
+                ", sourceCurrency='" + source + '\'' +
+                ", destinationCurrency='" + destination + '\'' +
                 ", coefficient=" + coefficient +
                 '}';
     }

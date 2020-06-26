@@ -38,8 +38,8 @@ public class RatesSynchronizationTasks {
 
 		for(Rate updatedRate : updatedRates){
 			Rate rateToUpdate = (Rate) rateService.findBySourceAndTargetCurrency(
-					updatedRate.getSourceCurrency(),
-					updatedRate.getDestinationCurrency()
+					updatedRate.getSource(),
+					updatedRate.getDestination()
 					);
 			System.out.println("");
 		}

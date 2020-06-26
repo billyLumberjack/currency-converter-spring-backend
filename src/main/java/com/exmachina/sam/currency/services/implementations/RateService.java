@@ -22,7 +22,7 @@ public class RateService implements IRateService {
 
     @Override
     public Rate findBySourceAndTargetCurrency(String sourceCurrency, String destinationCurrency) {
-        Rate rate = repository.findBySourceAndTargetCurrency(sourceCurrency, destinationCurrency);
+        Rate rate = repository.findBySourceAndDestination(sourceCurrency, destinationCurrency);
         return rate;
     }
 }
