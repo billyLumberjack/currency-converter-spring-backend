@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.exmachina.sam.currency.entities.CurrenciesConversion;
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.exception.RateNotFoundException;
 import com.exmachina.sam.currency.services.interfaces.IRateService;
@@ -52,14 +53,14 @@ public class RateController {
 	}
 
 	@GetMapping("/convert")
-	public ToReturn convertAmount(
+	public CurrenciesConversion convertAmount(
 			@RequestParam(value = "sourceCurrency" , defaultValue = "USD") String querySourceCurrency,
 			@RequestParam(value = "destinationCurrency" , defaultValue = "USD") String queryDestinationCurrency,
 			@RequestParam(value = "amount" , defaultValue = "0") Double sourceAmount
 	) {
 		try {
 			Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
-			return new ToReturn(
+			return new CurrenciesConversion(
 					rateForConversion,
 					sourceAmount,
 					sourceAmount * rateForConversion.getCoefficient()
@@ -70,43 +71,5 @@ public class RateController {
 		}
 
 
-	}
-}
-
-class ToReturn {
-	Rate usedRate;
-	Double sourceAmount;
-	Double destinationAmount;
-
-	ToReturn(){}
-
-	ToReturn(Rate usedRate , Double sourceAmount , Double destinationAmount){
-		this.usedRate = usedRate;
-		this.sourceAmount = sourceAmount;
-		this.destinationAmount = destinationAmount;
-	}
-
-	public Rate getUsedRate() {
-		return usedRate;
-	}
-
-	public void setUsedRate(Rate usedRate) {
-		this.usedRate = usedRate;
-	}
-
-	public Double getSourceAmount() {
-		return sourceAmount;
-	}
-
-	public void setSourceAmount(Double sourceAmount) {
-		this.sourceAmount = sourceAmount;
-	}
-
-	public Double getDestinationAmount() {
-		return destinationAmount;
-	}
-
-	public void setDestinationAmount(Double destinationAmount) {
-		this.destinationAmount = destinationAmount;
 	}
 }
