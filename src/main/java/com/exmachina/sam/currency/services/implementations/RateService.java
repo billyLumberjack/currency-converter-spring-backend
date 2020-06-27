@@ -3,6 +3,7 @@ package com.exmachina.sam.currency.services.implementations;
 import java.util.List;
 
 import com.exmachina.sam.currency.entities.Rate;
+import com.exmachina.sam.currency.exception.RateNotFoundException;
 import com.exmachina.sam.currency.repositories.RateRepository;
 import com.exmachina.sam.currency.services.interfaces.IRateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,24 @@ public class RateService implements IRateService {
     }
 
     @Override
-    public Rate findBySourceAndTargetCurrency(String sourceCurrency, String destinationCurrency) {
+    public Rate findBySourceAndDestination(String sourceCurrency, String destinationCurrency) throws RateNotFoundException {
         Rate rate = repository.findBySourceAndDestination(sourceCurrency, destinationCurrency);
+        raiseErrorIfNullOrEmpty(rate);
         return rate;
+    }
+
+    @Override
+    public List<Rate> findBySource(String sourceCurrency) throws RateNotFoundException{
+        List<Rate> rates = repository.findBySource(sourceCurrency);
+        raiseErrorIfNullOrEmpty(rates);
+        return rates;
+    }
+
+    @Override
+    public List<Rate> findByDestination(String targetCurrency) throws RateNotFoundException{
+        List<Rate> rates = repository.findByDestination(targetCurrency);
+        raiseErrorIfNullOrEmpty(rates);
+        return rates;
     }
 
     @Override
@@ -39,5 +55,17 @@ public class RateService implements IRateService {
 
     public Rate save(Rate rateToSave){
         return repository.save(rateToSave);
+    }
+
+    private void raiseErrorIfNullOrEmpty(Rate rate) throws RateNotFoundException {
+        if(rate == null){
+            throw new RateNotFoundException("Rate not found exception");
+        }
+    }
+
+    private void raiseErrorIfNullOrEmpty(List<Rate> rates) throws RateNotFoundException {
+        if(rates.size() == 0){
+            throw new RateNotFoundException("Rate not found exception");
+        }
     }
 }
