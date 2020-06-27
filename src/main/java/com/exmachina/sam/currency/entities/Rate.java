@@ -8,7 +8,7 @@ import java.math.BigInteger;
 @Table(name = "rates")
 public class Rate {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private BigInteger id;
 
