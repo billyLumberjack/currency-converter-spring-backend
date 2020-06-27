@@ -31,4 +31,13 @@ public class RateService implements IRateService {
         List<Rate> rates = (List<Rate>) repository.saveAll(ratesToSave);
         return rates;
     }
+
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
+    public Rate save(Rate rateToSave){
+        return repository.save(rateToSave);
+    }
 }

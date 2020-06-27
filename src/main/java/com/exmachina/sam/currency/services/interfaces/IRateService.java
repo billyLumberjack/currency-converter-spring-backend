@@ -9,4 +9,6 @@ public interface IRateService {
     List<Rate> findAll();
     Rate findBySourceAndTargetCurrency(String sourceCurrency , String destinationCurrency);
     List<Rate> saveAll(List<Rate> ratesToSave);
+    Rate save(Rate rateToSave);
+    void deleteAll();
 }
