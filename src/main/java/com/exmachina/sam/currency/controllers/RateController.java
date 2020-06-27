@@ -1,14 +1,18 @@
 package com.exmachina.sam.currency.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import com.exmachina.sam.currency.entities.Rate;
+import com.exmachina.sam.currency.exception.RateNotFoundException;
 import com.exmachina.sam.currency.services.interfaces.IRateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class RateController {
@@ -17,10 +21,92 @@ public class RateController {
 	private IRateService rateService;
 
 	@GetMapping("/rate")
-	public List<Rate> greeting() {
+	public List<Rate> getRate(
+			@RequestParam(value = "sourceCurrency" , defaultValue = "") String querySourceCurrency ,
+			@RequestParam(value = "destinationCurrency" , defaultValue = "") String queryDestinationCurrency
+	) throws RateNotFoundException {
 
-		List<Rate> allRates = (List<Rate>) rateService.findAll();
+		List<Rate> resultRates = new ArrayList<Rate>();
 
-		return allRates;
+		if(!querySourceCurrency.isEmpty() && !queryDestinationCurrency.isEmpty()){
+			resultRates.add(
+					rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency)
+			);
+		}
+		if(!querySourceCurrency.isEmpty() && queryDestinationCurrency.isEmpty()){
+			resultRates.addAll(
+					rateService.findBySource(querySourceCurrency)
+			);
+		}
+		if(querySourceCurrency.isEmpty() && !queryDestinationCurrency.isEmpty()){
+			resultRates.addAll(
+					rateService.findByDestination(queryDestinationCurrency)
+			);
+		}
+		if(querySourceCurrency.isEmpty() && queryDestinationCurrency.isEmpty()){
+			resultRates.addAll(
+					rateService.findAll()
+			);
+		}
+		return resultRates;
+	}
+
+	@GetMapping("/convert")
+	public ToReturn convertAmount(
+			@RequestParam(value = "sourceCurrency" , defaultValue = "USD") String querySourceCurrency,
+			@RequestParam(value = "destinationCurrency" , defaultValue = "USD") String queryDestinationCurrency,
+			@RequestParam(value = "amount" , defaultValue = "0") Double sourceAmount
+	) {
+		try {
+			Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
+			return new ToReturn(
+					rateForConversion,
+					sourceAmount,
+					sourceAmount * rateForConversion.getCoefficient()
+			);
+		}
+		catch(RateNotFoundException ex){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Rate Not Found", ex);
+		}
+
+
+	}
+}
+
+class ToReturn {
+	Rate usedRate;
+	Double sourceAmount;
+	Double destinationAmount;
+
+	ToReturn(){}
+
+	ToReturn(Rate usedRate , Double sourceAmount , Double destinationAmount){
+		this.usedRate = usedRate;
+		this.sourceAmount = sourceAmount;
+		this.destinationAmount = destinationAmount;
+	}
+
+	public Rate getUsedRate() {
+		return usedRate;
+	}
+
+	public void setUsedRate(Rate usedRate) {
+		this.usedRate = usedRate;
+	}
+
+	public Double getSourceAmount() {
+		return sourceAmount;
+	}
+
+	public void setSourceAmount(Double sourceAmount) {
+		this.sourceAmount = sourceAmount;
+	}
+
+	public Double getDestinationAmount() {
+		return destinationAmount;
+	}
+
+	public void setDestinationAmount(Double destinationAmount) {
+		this.destinationAmount = destinationAmount;
 	}
 }
