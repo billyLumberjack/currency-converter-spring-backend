@@ -11,18 +11,21 @@ import java.util.Map;
 
 public class ThirdPartyRatesHelper {
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String baseUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms={source}&tsyms={comma_separated_destinations}&api_key={key}";
+    private String baseUrl;
     private String apiKey;
 
     private static ThirdPartyRatesHelper instance;
 
-    private ThirdPartyRatesHelper(String apiKey){
+    private ThirdPartyRatesHelper(String baseUrl , String apiKey)
+    {
+        this.baseUrl = baseUrl;
         this.apiKey = apiKey;
+
     }
 
-    public static ThirdPartyRatesHelper getInstance(String apiKey){
+    public static ThirdPartyRatesHelper getInstance(String baseUrl, String apiKey){
         if ( instance == null) {
-            instance = new ThirdPartyRatesHelper(apiKey);
+            instance = new ThirdPartyRatesHelper(baseUrl, apiKey);
         }
         return instance;
     }

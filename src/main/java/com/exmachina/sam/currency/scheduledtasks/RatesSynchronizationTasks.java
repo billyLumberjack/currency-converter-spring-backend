@@ -22,7 +22,11 @@ public class RatesSynchronizationTasks {
 
 	@Scheduled(fixedRateString = "${scheduler.fixed.rate}")
 	public void ratesSynchronization() {
-		ThirdPartyRatesHelper thirdPartyRatesHelper = ThirdPartyRatesHelper.getInstance(env.getProperty("thirdparty.converter.api.key"));
+
+		String baseUrlFromProperties = env.getProperty("thirdparty.converter.base.url");
+		String apiKeyFromProperties = env.getProperty("thirdparty.converter.api.key");
+
+		ThirdPartyRatesHelper thirdPartyRatesHelper = ThirdPartyRatesHelper.getInstance(baseUrlFromProperties, apiKeyFromProperties);
 		String sourceCurrencyToSynch = env.getProperty("thirdparty.converter.source.corrency");
 		String[] destinationCurrencies = env.getProperty("thirdparty.converter.comma.separated.destination.currencies").split(",");
 
