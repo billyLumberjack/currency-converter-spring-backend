@@ -60,10 +60,11 @@ public class RateController {
 	) {
 		try {
 			Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
+			Double conversionResult = sourceAmount * rateForConversion.getCoefficient();
 			return new CurrenciesConversion(
 					rateForConversion,
 					sourceAmount,
-					sourceAmount * rateForConversion.getCoefficient()
+					conversionResult
 			);
 		}
 		catch(RateNotFoundException ex){
