@@ -36,8 +36,8 @@ public class RateService implements IRateService {
     }
 
     @Override
-    public List<Rate> findByDestination(String targetCurrency) throws RateNotFoundException{
-        List<Rate> rates = repository.findByDestination(targetCurrency);
+    public List<Rate> findByDestination(String destinationCurrency) throws RateNotFoundException{
+        List<Rate> rates = repository.findByDestination(destinationCurrency);
         raiseErrorIfNullOrEmpty(rates);
         return rates;
     }

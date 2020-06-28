@@ -12,15 +12,15 @@ public class RatesMapper {
     public static List<Rate> mapThirdPartyRatesToRates(ThirdPartyRates thirdPartyRatesMap) {
         List<Rate> mappedRates = new ArrayList<Rate>();
         Rate rateToAdd = null;
-        String currentSourceCurrency = null, currentTargetCurrency = null;
+        String currentSourceCurrency = null, currentDestinationCurrency = null;
         Double currentCoefficient = 0.0;
 
         for(Map.Entry<String, LinkedHashMap<String,Double>> sourceCurrencyEntry : thirdPartyRatesMap.entrySet()){
             currentSourceCurrency = sourceCurrencyEntry.getKey();
-            for(Map.Entry<String,Double> targetCurrencyEntry : sourceCurrencyEntry.getValue().entrySet()){
-                currentTargetCurrency = targetCurrencyEntry.getKey();
-                currentCoefficient = targetCurrencyEntry.getValue();
-                rateToAdd = new Rate(currentSourceCurrency, currentTargetCurrency, currentCoefficient);
+            for(Map.Entry<String,Double> destinationCurrencyEntry : sourceCurrencyEntry.getValue().entrySet()){
+                currentDestinationCurrency = destinationCurrencyEntry.getKey();
+                currentCoefficient = destinationCurrencyEntry.getValue();
+                rateToAdd = new Rate(currentSourceCurrency, currentDestinationCurrency, currentCoefficient);
                 mappedRates.add(rateToAdd);
             }
         }

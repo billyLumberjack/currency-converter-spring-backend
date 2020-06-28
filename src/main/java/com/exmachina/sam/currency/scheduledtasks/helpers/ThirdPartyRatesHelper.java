@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ThirdPartyRatesHelper {
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String baseUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms={source}&tsyms={comma_separated_targets}&api_key={key}";
+    private final String baseUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms={source}&tsyms={comma_separated_destinations}&api_key={key}";
     private String apiKey;
 
     private static ThirdPartyRatesHelper instance;
@@ -27,10 +27,10 @@ public class ThirdPartyRatesHelper {
         return instance;
     }
 
-    public ThirdPartyRates getThirdPartyRatesBySourceAndTargetCurrency(String source , String[] targets){
+    public ThirdPartyRates getThirdPartyRatesBySourceAndDestinationCurrency(String source , String[] destinations){
         Map<String, String> httpParams = new HashMap<String, String>();
         httpParams.put("source" , source);
-        httpParams.put("comma_separated_targets" , String.join(",", targets));
+        httpParams.put("comma_separated_destinations" , String.join(",", destinations));
         httpParams.put("key" , apiKey);
 
         return restTemplate.getForObject(baseUrl, ThirdPartyRates.class, httpParams);

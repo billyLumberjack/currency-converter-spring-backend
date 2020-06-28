@@ -11,7 +11,7 @@ import java.util.List;
 public interface RateRepository extends JpaRepository<Rate, Integer> {
     Rate findBySourceAndDestination(String sourceCurrency, String destinationCurrency);
 
-    List<Rate> findByDestination(String targetCurrency);
+    List<Rate> findByDestination(String destinationCurrency);
 
     List<Rate> findBySource(String sourceCurrency);
 }
