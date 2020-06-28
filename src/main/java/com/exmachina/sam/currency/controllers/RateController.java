@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+
 @RestController
 public class RateController {
 
@@ -50,27 +51,5 @@ public class RateController {
 			);
 		}
 		return resultRates;
-	}
-
-	@GetMapping("/convert")
-	public CurrenciesConversion convertAmount(
-			@RequestParam(value = "sourceCurrency" , defaultValue = "USD") String querySourceCurrency,
-			@RequestParam(value = "destinationCurrency" , defaultValue = "USD") String queryDestinationCurrency,
-			@RequestParam(value = "amount" , defaultValue = "0") Double sourceAmount
-	) {
-		try {
-			Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
-			Double conversionResult = sourceAmount * rateForConversion.getCoefficient();
-			return new CurrenciesConversion(
-					rateForConversion,
-					sourceAmount,
-					conversionResult
-			);
-		}
-		catch(RateNotFoundException ex){
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Rate Not Found", ex);
-		}
-
-
 	}
 }
