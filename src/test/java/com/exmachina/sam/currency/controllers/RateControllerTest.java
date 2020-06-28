@@ -129,7 +129,7 @@ public class RateControllerTest {
     }
 
     @Test
-    public void whenRateDoesNotExist_thenReturns404() throws Exception {
+    public void whenRateDoesNotExist_thenReturns4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";
         Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
