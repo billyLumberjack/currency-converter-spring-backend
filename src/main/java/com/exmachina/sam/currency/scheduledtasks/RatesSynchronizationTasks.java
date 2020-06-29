@@ -27,14 +27,13 @@ public class RatesSynchronizationTasks {
 		String apiKeyFromProperties = env.getProperty("thirdparty.converter.api.key");
 
 		ThirdPartyRatesHelper thirdPartyRatesHelper = ThirdPartyRatesHelper.getInstance(baseUrlFromProperties, apiKeyFromProperties);
-		String sourceCurrencyToSynch = env.getProperty("thirdparty.converter.source.corrency");
-		String[] destinationCurrencies = env.getProperty("thirdparty.converter.comma.separated.destination.currencies").split(",");
+		String currenciesToSynch = env.getProperty("thirdparty.converter.comma.separated.currencies");
 
 		ThirdPartyRates updatedThirdPartyRates = thirdPartyRatesHelper.getThirdPartyRatesBySourceAndDestinationCurrency(
-				sourceCurrencyToSynch,
-				destinationCurrencies
+				currenciesToSynch
 		);
 		List<Rate> updatedRates = RatesMapper.mapThirdPartyRatesToRates(updatedThirdPartyRates);
+
 
 		rateService.deleteAll();
 		rateService.saveAll(updatedRates);

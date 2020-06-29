@@ -30,10 +30,9 @@ public class ThirdPartyRatesHelper {
         return instance;
     }
 
-    public ThirdPartyRates getThirdPartyRatesBySourceAndDestinationCurrency(String source , String[] destinations){
+    public ThirdPartyRates getThirdPartyRatesBySourceAndDestinationCurrency(String currenciesToSynch){
         Map<String, String> httpParams = new HashMap<String, String>();
-        httpParams.put("source" , source);
-        httpParams.put("comma_separated_destinations" , String.join(",", destinations));
+        httpParams.put("comma_separated_currencies" , currenciesToSynch);
         httpParams.put("key" , apiKey);
 
         return restTemplate.getForObject(baseUrl, ThirdPartyRates.class, httpParams);
