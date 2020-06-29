@@ -1,5 +1,6 @@
 package com.exmachina.sam.currency.controllers;
 
+import com.exmachina.sam.currency.comparator.IgnoreCoefficientCurrenciesConversionComparator;
 import com.exmachina.sam.currency.entities.CurrenciesConversion;
 import com.exmachina.sam.currency.entities.Rate;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,33 +20,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class IgnoreCoefficientCurrenciesConversionComparator implements Comparator<CurrenciesConversion>
-{
-    public int compare(CurrenciesConversion a, CurrenciesConversion b)
-    {
-        int comparisonResult;
 
-        comparisonResult = a.getSourceAmount().compareTo(b.getSourceAmount());
-
-        if(comparisonResult != 0)
-            return comparisonResult;
-
-        comparisonResult = a.getDestinationAmount().compareTo(b.getDestinationAmount());
-
-        if(comparisonResult != 0)
-            return comparisonResult;
-
-        comparisonResult = a.getUsedRate().getSource().compareTo(b.getUsedRate().getSource());
-
-        if(comparisonResult != 0)
-            return comparisonResult;
-
-        comparisonResult = a.getUsedRate().getDestination().compareTo(b.getUsedRate().getDestination());
-
-        return comparisonResult;
-
-    }
-}
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -81,27 +56,23 @@ public class ConversionControllerTest {
                 amountToConvert * actualCurrenciesConversion.getUsedRate().getCoefficient()
                 );
 
-        assertThat(actualCurrenciesConversion).usingComparator(new IgnoreCoefficientCurrenciesConversionComparator()).isEqualTo(expectedCurrenciesConversion);
+        assertThat(actualCurrenciesConversion)
+                .usingComparator(new IgnoreCoefficientCurrenciesConversionComparator())
+                .isEqualTo(expectedCurrenciesConversion);
     }
 
     @Test
     public void whenConversionRateDoesNotExists_thenReturnsError4xx() throws Exception {
-        String sourceCurrency = "BTC";
-        String destinationCurrency = "USD";
+        String sourceCurrency = "XXXXX";
+        String destinationCurrency = "YYYYY";
+        Double amountToConvert = 10.0;
         Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
 
-        MvcResult mvcResult = mockMvc.perform(get("/convert")
+        mockMvc.perform(get("/convert")
                 .contentType("application/json")
                 .param("sourceCurrency", sourceCurrency)
-                .param("destinationCurrency", destinationCurrency))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String actualResponseBody = mvcResult.getResponse().getContentAsString();
-        List<Rate> actualRateList = objectMapper.readValue(actualResponseBody, new TypeReference<List<Rate>>() { });
-
-        //assertThat(actualRateList).allSatisfy(
-        //        actualRate -> assertThat(actualRate).usingComparator(ignoreRateCoefficientComparator).isEqualTo(expectedRate)
-        //);
+                .param("destinationCurrency", destinationCurrency)
+                .param("amount", amountToConvert.toString()))
+                .andExpect(status().is4xxClientError());
     }
 }
