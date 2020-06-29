@@ -70,4 +70,12 @@ public class ConversionControllerTest extends AbstractControllerTest{
                 .param("amount", amountToConvert.toString()))
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    @Override
+    public void whenEndpointPromptedWithoutAuth_thenReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/convert")
+                .contentType("application/json"))
+                .andExpect(status().isUnauthorized());
+    }
 }

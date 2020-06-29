@@ -131,5 +131,11 @@ public class RateControllerTest extends AbstractControllerTest{
 
     }
 
-
+    @Test
+    @Override
+    public void whenEndpointPromptedWithoutAuth_thenReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/rate")
+                .contentType("application/json"))
+                .andExpect(status().isUnauthorized());
+    }
 }
