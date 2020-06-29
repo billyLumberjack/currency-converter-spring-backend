@@ -5,6 +5,7 @@ import java.util.List;
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.exception.RateNotFoundException;
 import com.exmachina.sam.currency.repositories.RateRepository;
+import com.exmachina.sam.currency.projection.RateSourceProjection;
 import com.exmachina.sam.currency.services.interfaces.IRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,11 @@ public class RateService implements IRateService {
     @Override
     public void deleteAll() {
         repository.deleteAll();
+    }
+
+    @Override
+    public List<RateSourceProjection> findBy() {
+        return repository.findDistinctBy();
     }
 
     public Rate save(Rate rateToSave){
