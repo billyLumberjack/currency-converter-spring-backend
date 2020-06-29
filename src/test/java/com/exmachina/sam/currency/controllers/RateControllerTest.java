@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -30,26 +31,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class RateControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private final Comparator<Rate> ignoreRateCoefficientComparator =
-            Comparator.comparing(Rate::getSource).thenComparing(Rate::getDestination);
-
-    private final Comparator<Rate> ignoreRateCoefficientAndSourceComparator =
-            Comparator.comparing(Rate::getSource);
-
-    private final Comparator<Rate> ignoreRateCoefficientAndDestinationComparator =
-            Comparator.comparing(Rate::getDestination);
+public class RateControllerTest extends AbstractControllerTest{
 
     @Test
+    @WithMockUser(roles = administratorRole)
     public void whenSourceAndDestinationProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "USD";
@@ -71,6 +56,7 @@ public class RateControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = administratorRole)
     public void whenOnlySourceIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "XXX";
@@ -91,6 +77,7 @@ public class RateControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = administratorRole)
     public void whenOnlyDestinationIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "XXX";
         String destinationCurrency = "USD";
@@ -111,6 +98,7 @@ public class RateControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = administratorRole)
     public void whenSourceNorDestinationAreProvided_thenReturnsAllData() throws Exception {
 
         Class<Rate> expectedItemsClass = Rate.class;
@@ -129,6 +117,7 @@ public class RateControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = administratorRole)
     public void whenRateDoesNotExist_thenReturns4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";
