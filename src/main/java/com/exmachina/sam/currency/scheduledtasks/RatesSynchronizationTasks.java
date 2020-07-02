@@ -27,7 +27,7 @@ public class RatesSynchronizationTasks {
 	private RateService rateService;
 	private ThirdPartyRatesHelper thirdPartyRatesHelper;
 
-	@Scheduled(fixedRateString = "${scheduler.fixed.rate}")
+	@Scheduled(fixedRateString = "${scheduler.fixed.milliseconds.rate}")
 	public void ratesSynchronization() {
 		ThirdPartyRates updatedThirdPartyRates = thirdPartyRatesHelper.getThirdPartyRatesBySourceAndDestinationCurrency(
 				currenciesToSynch
