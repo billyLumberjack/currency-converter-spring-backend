@@ -2,9 +2,8 @@ package com.exmachina.sam.currency.inmemoryauth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,8 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private Environment env;
+    @Value("${spring.security.admin.username}")
+    private final String adminUsername = null;
+
+    @Value("${spring.security.admin.password}")
+    private final String adminPassword = null;
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -64,8 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        String adminUsername = env.getProperty("spring.security.admin.username");
-        String adminPassword = env.getProperty("spring.security.admin.password");
 
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
