@@ -3,6 +3,7 @@ package com.exmachina.sam.currency.controllers;
 import com.exmachina.sam.currency.comparator.IgnoreCoefficientCurrenciesConversionComparator;
 import com.exmachina.sam.currency.entities.CurrenciesConversion;
 import com.exmachina.sam.currency.entities.Rate;
+import com.exmachina.sam.currency.inmemoryauth.security.UserRoles;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
@@ -13,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ConversionControllerTest extends AbstractControllerTest{
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenConversionIsPrompted_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "USD";
@@ -43,7 +44,7 @@ public class ConversionControllerTest extends AbstractControllerTest{
     }
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenConversionRateDoesNotExists_thenReturnsError4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";

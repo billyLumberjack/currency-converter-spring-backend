@@ -1,17 +1,6 @@
 package com.exmachina.sam.currency.inmemoryauth.security;
 
-public enum UserRoles {
-    STRING_ADMIN("ADMINISTRATOR"),
-    STRING_USER("USER");
-
-    private final String role;
-
-    UserRoles(final String role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return role;
-    }
+public class UserRoles {
+    public static final String STRING_ADMIN = "ADMINISTRATOR";
+    public static final String STRING_USER = "USER";
 }

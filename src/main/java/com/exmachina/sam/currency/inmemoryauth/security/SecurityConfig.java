@@ -46,9 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/convert/**").hasRole(UserRoles.STRING_ADMIN.toString())
-                .antMatchers("/currencies/**").hasRole(UserRoles.STRING_ADMIN.toString())
-                .antMatchers("/rate/**").hasRole(UserRoles.STRING_ADMIN.toString())
+                .antMatchers("/convert/**").hasRole(UserRoles.STRING_ADMIN)
+                .antMatchers("/currencies/**").hasRole(UserRoles.STRING_ADMIN)
+                .antMatchers("/rate/**").hasRole(UserRoles.STRING_ADMIN)
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -72,6 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser(adminUsername)
                 .password(encoder.encode(adminPassword))
-                .roles(UserRoles.STRING_ADMIN.toString());
+                .roles(UserRoles.STRING_ADMIN);
     }
 }

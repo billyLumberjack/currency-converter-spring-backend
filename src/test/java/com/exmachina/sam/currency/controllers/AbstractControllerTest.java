@@ -29,8 +29,6 @@ public abstract class AbstractControllerTest {
     protected final Comparator<Rate> ignoreRateCoefficientAndDestinationComparator =
             Comparator.comparing(Rate::getDestination);
 
-    protected final String administratorRole = "ADMINISTRATOR";
-
     abstract public void whenEndpointPromptedWithoutAuth_thenReturnsUnauthorized() throws Exception;
 
 }

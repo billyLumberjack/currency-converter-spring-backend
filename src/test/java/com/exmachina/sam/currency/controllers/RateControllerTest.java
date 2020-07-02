@@ -2,6 +2,7 @@ package com.exmachina.sam.currency.controllers;
 
 import com.exmachina.sam.currency.CurrencyConverterBackendApplication;
 import com.exmachina.sam.currency.entities.Rate;
+import com.exmachina.sam.currency.inmemoryauth.security.UserRoles;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RateControllerTest extends AbstractControllerTest{
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenSourceAndDestinationProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "USD";
@@ -56,7 +57,7 @@ public class RateControllerTest extends AbstractControllerTest{
     }
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenOnlySourceIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "XXX";
@@ -77,7 +78,7 @@ public class RateControllerTest extends AbstractControllerTest{
     }
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenOnlyDestinationIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "XXX";
         String destinationCurrency = "USD";
@@ -98,7 +99,7 @@ public class RateControllerTest extends AbstractControllerTest{
     }
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenSourceNorDestinationAreProvided_thenReturnsAllData() throws Exception {
 
         Class<Rate> expectedItemsClass = Rate.class;
@@ -117,7 +118,7 @@ public class RateControllerTest extends AbstractControllerTest{
     }
 
     @Test
-    @WithMockUser(roles = administratorRole)
+    @WithMockUser(roles = UserRoles.STRING_ADMIN)
     public void whenRateDoesNotExist_thenReturns4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";
