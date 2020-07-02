@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ConversionControllerTest extends AbstractControllerTest {
+public class ConversionControllerIntegrationTest extends AbstractControllerTest {
 
     @Test
     @WithMockUser(roles = UserRoles.STRING_ADMIN)
