@@ -7,6 +7,9 @@ import com.exmachina.sam.currency.inmemoryauth.security.UserRoles;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,8 +21,8 @@ public class ConversionControllerTest extends AbstractControllerTest{
     public void whenConversionIsPrompted_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "USD";
-        Double amountToConvert = 10.0;
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        BigDecimal amountToConvert = BigDecimal.TEN;
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         MvcResult mvcResult = mockMvc.perform(get("/convert")
                 .contentType("application/json")
@@ -35,7 +38,7 @@ public class ConversionControllerTest extends AbstractControllerTest{
         CurrenciesConversion expectedCurrenciesConversion = new CurrenciesConversion(
                 expectedRate,
                 amountToConvert,
-                amountToConvert * actualCurrenciesConversion.getUsedRate().getCoefficient()
+                amountToConvert.multiply(actualCurrenciesConversion.getUsedRate().getCoefficient())
                 );
 
         assertThat(actualCurrenciesConversion)
@@ -48,8 +51,8 @@ public class ConversionControllerTest extends AbstractControllerTest{
     public void whenConversionRateDoesNotExists_thenReturnsError4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";
-        Double amountToConvert = 10.0;
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        BigDecimal amountToConvert = BigDecimal.TEN;
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         mockMvc.perform(get("/convert")
                 .contentType("application/json")

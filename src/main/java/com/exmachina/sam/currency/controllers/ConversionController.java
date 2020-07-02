@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+
 @RestController
 public class ConversionController {
 
@@ -21,11 +23,11 @@ public class ConversionController {
     public CurrenciesConversion convertAmount(
             @RequestParam(value = "sourceCurrency" , defaultValue = "USD") String querySourceCurrency,
             @RequestParam(value = "destinationCurrency" , defaultValue = "USD") String queryDestinationCurrency,
-            @RequestParam(value = "amount" , defaultValue = "0") Double sourceAmount
+            @RequestParam(value = "amount" , defaultValue = "0") BigDecimal sourceAmount
     ) {
         try {
             Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
-            Double conversionResult = sourceAmount * rateForConversion.getCoefficient();
+            BigDecimal conversionResult = sourceAmount.multiply(rateForConversion.getCoefficient());
             return new CurrenciesConversion(
                     rateForConversion,
                     sourceAmount,

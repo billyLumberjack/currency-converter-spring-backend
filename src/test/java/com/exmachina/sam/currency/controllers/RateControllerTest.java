@@ -24,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +40,7 @@ public class RateControllerTest extends AbstractControllerTest{
     public void whenSourceAndDestinationProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "USD";
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         MvcResult mvcResult = mockMvc.perform(get("/rate")
                 .contentType("application/json")
@@ -61,7 +62,7 @@ public class RateControllerTest extends AbstractControllerTest{
     public void whenOnlySourceIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "BTC";
         String destinationCurrency = "XXX";
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         MvcResult mvcResult = mockMvc.perform(get("/rate")
                 .contentType("application/json")
@@ -82,7 +83,7 @@ public class RateControllerTest extends AbstractControllerTest{
     public void whenOnlyDestinationIsProvided_thenReturnsConsistentData() throws Exception {
         String sourceCurrency = "XXX";
         String destinationCurrency = "USD";
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         MvcResult mvcResult = mockMvc.perform(get("/rate")
                 .contentType("application/json")
@@ -122,7 +123,7 @@ public class RateControllerTest extends AbstractControllerTest{
     public void whenRateDoesNotExist_thenReturns4xx() throws Exception {
         String sourceCurrency = "XXXXX";
         String destinationCurrency = "YYYYY";
-        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, 0);
+        Rate expectedRate = new Rate(sourceCurrency, destinationCurrency, BigDecimal.ZERO);
 
         mockMvc.perform(get("/rate")
                 .contentType("application/json")

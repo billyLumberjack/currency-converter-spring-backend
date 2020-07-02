@@ -3,6 +3,7 @@ package com.exmachina.sam.currency.scheduledtasks.helpers;
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,11 +14,11 @@ public class RatesMapper {
         List<Rate> mappedRates = new ArrayList<Rate>();
         Rate rateToAdd = null;
         String currentSourceCurrency = null, currentDestinationCurrency = null;
-        Double currentCoefficient = 0.0;
+        BigDecimal currentCoefficient = BigDecimal.ZERO;
 
-        for(Map.Entry<String, LinkedHashMap<String,Double>> sourceCurrencyEntry : thirdPartyRatesMap.entrySet()){
+        for(Map.Entry<String, LinkedHashMap<String, BigDecimal>> sourceCurrencyEntry : thirdPartyRatesMap.entrySet()){
             currentSourceCurrency = sourceCurrencyEntry.getKey();
-            for(Map.Entry<String,Double> destinationCurrencyEntry : sourceCurrencyEntry.getValue().entrySet()){
+            for(Map.Entry<String,BigDecimal> destinationCurrencyEntry : sourceCurrencyEntry.getValue().entrySet()){
                 currentDestinationCurrency = destinationCurrencyEntry.getKey();
                 currentCoefficient = destinationCurrencyEntry.getValue();
                 rateToAdd = new Rate(currentSourceCurrency, currentDestinationCurrency, currentCoefficient);

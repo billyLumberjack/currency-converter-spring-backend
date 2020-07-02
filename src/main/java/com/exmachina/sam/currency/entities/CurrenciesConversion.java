@@ -1,11 +1,13 @@
 package com.exmachina.sam.currency.entities;
 
+import java.math.BigDecimal;
+
 public class CurrenciesConversion {
 	private Rate usedRate;
-	private Double sourceAmount;
-	private Double destinationAmount;
+	private BigDecimal sourceAmount;
+	private BigDecimal destinationAmount;
 
-	public CurrenciesConversion(Rate usedRate, Double sourceAmount, Double destinationAmount){
+	public CurrenciesConversion(Rate usedRate, BigDecimal sourceAmount, BigDecimal destinationAmount){
 		this.usedRate = usedRate;
 		this.sourceAmount = sourceAmount;
 		this.destinationAmount = destinationAmount;
@@ -19,19 +21,19 @@ public class CurrenciesConversion {
 		this.usedRate = usedRate;
 	}
 
-	public Double getSourceAmount() {
+	public BigDecimal getSourceAmount() {
 		return sourceAmount;
 	}
 
-	public void setSourceAmount(Double sourceAmount) {
+	public void setSourceAmount(BigDecimal sourceAmount) {
 		this.sourceAmount = sourceAmount;
 	}
 
-	public Double getDestinationAmount() {
+	public BigDecimal getDestinationAmount() {
 		return destinationAmount;
 	}
 
-	public void setDestinationAmount(Double destinationAmount) {
+	public void setDestinationAmount(BigDecimal destinationAmount) {
 		this.destinationAmount = destinationAmount;
 	}
 }

@@ -2,6 +2,7 @@ package com.exmachina.sam.currency.entities;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Entity
@@ -19,12 +20,12 @@ public class Rate {
     private String destination;
 
     @Column(name = "coefficient")
-    private double coefficient;
+    private BigDecimal coefficient;
 
     public Rate() {
     }
 
-    public Rate(String source, String destination, double coefficient) {
+    public Rate(String source, String destination, BigDecimal coefficient) {
         this.source = source;
         this.destination = destination;
         this.coefficient = coefficient;
@@ -54,11 +55,11 @@ public class Rate {
         this.destination = destination;
     }
 
-    public double getCoefficient() {
+    public BigDecimal getCoefficient() {
         return coefficient;
     }
 
-    public void setCoefficient(double coefficient) {
+    public void setCoefficient(BigDecimal coefficient) {
         this.coefficient = coefficient;
     }
 
