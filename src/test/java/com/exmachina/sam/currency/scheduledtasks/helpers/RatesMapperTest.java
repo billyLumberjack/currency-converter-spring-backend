@@ -18,8 +18,9 @@ public class RatesMapperTest {
 
     @Test
     public void mapThirdPartyRatesToRates(){
+        RatesMapper ratesMapper = new RatesMapper();
         ThirdPartyRates thirdPartyRates = createThirdPartyRatesWithFakes();
-        List<Rate> actualMappedThirdPartyRates = RatesMapper.mapThirdPartyRatesToRates(thirdPartyRates);
+        List<Rate> actualMappedThirdPartyRates = ratesMapper.mapThirdPartyRatesToRates(thirdPartyRates);
 
         assertThat(actualMappedThirdPartyRates)
                 .extracting(

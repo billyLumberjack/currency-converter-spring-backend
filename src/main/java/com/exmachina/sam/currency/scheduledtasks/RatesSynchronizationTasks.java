@@ -29,10 +29,11 @@ public class RatesSynchronizationTasks {
 
 	@Scheduled(fixedRateString = "${scheduler.fixed.milliseconds.rate}")
 	public void ratesSynchronization() {
+		RatesMapper ratesMapper = new RatesMapper();
 		ThirdPartyRates updatedThirdPartyRates = thirdPartyRatesHelper.getThirdPartyRatesBySourceAndDestinationCurrency(
 				currenciesToSynch
 		);
-		List<Rate> updatedRates = RatesMapper.mapThirdPartyRatesToRates(updatedThirdPartyRates);
+		List<Rate> updatedRates = ratesMapper.mapThirdPartyRatesToRates(updatedThirdPartyRates);
 		rateService.deleteAll();
 		rateService.saveAll(updatedRates);
 	}

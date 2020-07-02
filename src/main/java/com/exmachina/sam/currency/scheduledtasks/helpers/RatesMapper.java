@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RatesMapper {
-    public static List<Rate> mapThirdPartyRatesToRates(ThirdPartyRates thirdPartyRatesMap) {
+    public List<Rate> mapThirdPartyRatesToRates(ThirdPartyRates thirdPartyRatesMap) {
         List<Rate> mappedRates = new ArrayList<Rate>();
         Rate rateToAdd = null;
         String currentSourceCurrency = null, currentDestinationCurrency = null;
