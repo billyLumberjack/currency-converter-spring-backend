@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 public class RateService implements IRateService {
 
     @Autowired
+    RateService(RateRepository repository){
+        this.repository = repository;
+    }
+
     private RateRepository repository;
 
     @Override

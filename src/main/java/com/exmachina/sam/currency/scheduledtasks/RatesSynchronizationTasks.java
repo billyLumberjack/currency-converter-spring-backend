@@ -16,14 +16,17 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class RatesSynchronizationTasks {
 
-	@Autowired
-	private IRateService rateService;
-
-	@Autowired
-	private ThirdPartyRatesHelper thirdPartyRatesHelper;
-
 	@Value("${thirdparty.converter.comma.separated.currencies}")
 	private final String currenciesToSynch = null;
+
+	@Autowired
+	public RatesSynchronizationTasks(IRateService rateService, ThirdPartyRatesHelper thirdPartyRatesHelper){
+		this.rateService = rateService;
+		this.thirdPartyRatesHelper = thirdPartyRatesHelper;
+	}
+
+	private IRateService rateService;
+	private ThirdPartyRatesHelper thirdPartyRatesHelper;
 
 	@Scheduled(fixedRateString = "${scheduler.fixed.rate}")
 	public void ratesSynchronization() {

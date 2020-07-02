@@ -20,6 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 public class RateController {
 
 	@Autowired
+	public RateController(IRateService iRateService){
+		this.rateService = iRateService;
+	}
+
 	private IRateService rateService;
 
 	@GetMapping("/rate")

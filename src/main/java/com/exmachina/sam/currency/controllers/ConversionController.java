@@ -17,6 +17,10 @@ import java.math.BigDecimal;
 public class ConversionController {
 
     @Autowired
+    public ConversionController(IRateService iRateService){
+        this.rateService = iRateService;
+    }
+
     private IRateService rateService;
 
     @GetMapping("/convert")

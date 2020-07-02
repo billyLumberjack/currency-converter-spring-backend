@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 public class CurrenciesController {
 
 	@Autowired
+	public CurrenciesController(IRateService iRateService){
+		this.rateService = iRateService;
+	}
+
 	private IRateService rateService;
 
 	@GetMapping("/currencies")
