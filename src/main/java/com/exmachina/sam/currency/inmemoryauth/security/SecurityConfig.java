@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.servlet.http.HttpServletResponse;
@@ -59,16 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        String adminUsername = env.getProperty("spring.security.admin.username");
-//        String adminPassword = env.getProperty("spring.security.admin.password");
-//
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//
-//        auth.inMemoryAuthentication()
-//                .withUser(adminUsername)
-//                .password(encoder.encode(adminPassword))
-//                .roles(UserRoles.STRING_ADMIN.toString());
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        String adminUsername = env.getProperty("spring.security.admin.username");
+        String adminPassword = env.getProperty("spring.security.admin.password");
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        auth.inMemoryAuthentication()
+                .withUser(adminUsername)
+                .password(encoder.encode(adminPassword))
+                .roles(UserRoles.STRING_ADMIN.toString());
+    }
 }
