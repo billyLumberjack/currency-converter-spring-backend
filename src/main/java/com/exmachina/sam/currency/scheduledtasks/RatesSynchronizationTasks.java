@@ -6,12 +6,11 @@ import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.scheduledtasks.helpers.RatesMapper;
 import com.exmachina.sam.currency.scheduledtasks.helpers.ThirdPartyRatesHelper;
 import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
-import com.exmachina.sam.currency.services.interfaces.IRateService;
+import com.exmachina.sam.currency.services.interfaces.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RatesSynchronizationTasks {
@@ -20,12 +19,12 @@ public class RatesSynchronizationTasks {
 	private final String currenciesToSynch = null;
 
 	@Autowired
-	public RatesSynchronizationTasks(IRateService rateService, ThirdPartyRatesHelper thirdPartyRatesHelper){
+	public RatesSynchronizationTasks(RateService rateService, ThirdPartyRatesHelper thirdPartyRatesHelper){
 		this.rateService = rateService;
 		this.thirdPartyRatesHelper = thirdPartyRatesHelper;
 	}
 
-	private IRateService rateService;
+	private RateService rateService;
 	private ThirdPartyRatesHelper thirdPartyRatesHelper;
 
 	@Scheduled(fixedRateString = "${scheduler.fixed.rate}")

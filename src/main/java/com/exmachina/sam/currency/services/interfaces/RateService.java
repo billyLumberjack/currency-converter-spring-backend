@@ -6,7 +6,7 @@ import com.exmachina.sam.currency.projection.RateSourceProjection;
 
 import java.util.List;
 
-public interface IRateService {
+public interface RateService {
     List<Rate> findAll();
     Rate findBySourceAndDestination(String sourceCurrency , String destinationCurrency) throws RateNotFoundException;
     List<Rate> findBySource(String sourceCurrency) throws RateNotFoundException;

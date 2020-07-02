@@ -6,15 +6,15 @@ import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.exception.RateNotFoundException;
 import com.exmachina.sam.currency.repositories.RateRepository;
 import com.exmachina.sam.currency.projection.RateSourceProjection;
-import com.exmachina.sam.currency.services.interfaces.IRateService;
+import com.exmachina.sam.currency.services.interfaces.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RateService implements IRateService {
+public class RateServiceImpl implements RateService {
 
     @Autowired
-    RateService(RateRepository repository){
+    RateServiceImpl(RateRepository repository){
         this.repository = repository;
     }
 
