@@ -1,6 +1,7 @@
 package com.exmachina.sam.currency;
 
 import com.exmachina.sam.currency.scheduledtasks.helpers.ThirdPartyRatesHelper;
+import com.exmachina.sam.currency.services.converter.CurrencyConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,5 +23,10 @@ public class AppConfig {
                 thirdPartyBaseUrl,
                 thirdPartyApiKey
         );
+    }
+
+    @Bean
+    public CurrencyConverter currencyConverter(){
+        return new CurrencyConverter();
     }
 }

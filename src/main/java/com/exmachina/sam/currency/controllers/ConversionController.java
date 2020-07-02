@@ -3,6 +3,7 @@ package com.exmachina.sam.currency.controllers;
 import com.exmachina.sam.currency.entities.CurrenciesConversion;
 import com.exmachina.sam.currency.entities.Rate;
 import com.exmachina.sam.currency.exception.RateNotFoundException;
+import com.exmachina.sam.currency.services.converter.CurrencyConverter;
 import com.exmachina.sam.currency.services.interfaces.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,13 @@ import java.math.BigDecimal;
 public class ConversionController {
 
     @Autowired
-    public ConversionController(RateService rateService){
+    public ConversionController(RateService rateService, CurrencyConverter currencyConverter){
+        this.currencyConverter = currencyConverter;
         this.rateService = rateService;
     }
 
     private RateService rateService;
+    private CurrencyConverter currencyConverter;
 
     @GetMapping("/convert")
     public CurrenciesConversion convertAmount(
@@ -31,12 +34,7 @@ public class ConversionController {
     ) {
         try {
             Rate rateForConversion = rateService.findBySourceAndDestination(querySourceCurrency, queryDestinationCurrency);
-            BigDecimal conversionResult = sourceAmount.multiply(rateForConversion.getCoefficient());
-            return new CurrenciesConversion(
-                    rateForConversion,
-                    sourceAmount,
-                    conversionResult
-            );
+            return currencyConverter.convertByRateAndAmount(rateForConversion, sourceAmount);
         }
         catch(RateNotFoundException ex){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Rate Not Found", ex);

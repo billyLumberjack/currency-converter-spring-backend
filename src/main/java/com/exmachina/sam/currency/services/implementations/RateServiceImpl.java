@@ -1,5 +1,6 @@
 package com.exmachina.sam.currency.services.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.exmachina.sam.currency.entities.Rate;
@@ -24,6 +25,35 @@ public class RateServiceImpl implements RateService {
     public List<Rate> findAll() {
         List<Rate> rates = (List<Rate>) repository.findAll();
         return rates;
+    }
+
+    @Override
+    public List<Rate> findBy(String sourceCurrency, String destinationCurrency) throws RateNotFoundException {
+        List<Rate> toReturnRates = new ArrayList<Rate>();
+        Rate singleResultRate = new Rate();
+        List<Rate> multipleResultRate = new ArrayList<Rate>();
+
+		if(!sourceCurrency.isEmpty() && !destinationCurrency.isEmpty()){
+            singleResultRate = repository.findBySourceAndDestination(sourceCurrency, destinationCurrency);
+            raiseErrorIfNullOrEmpty(singleResultRate);
+            toReturnRates.add(singleResultRate);
+		}
+		else if(!sourceCurrency.isEmpty() && destinationCurrency.isEmpty()){
+            multipleResultRate = repository.findBySource(sourceCurrency);
+            raiseErrorIfNullOrEmpty(multipleResultRate);
+            toReturnRates.addAll(multipleResultRate);
+		}
+		else if(sourceCurrency.isEmpty() && !destinationCurrency.isEmpty()){
+            multipleResultRate = repository.findByDestination(destinationCurrency);
+            raiseErrorIfNullOrEmpty(multipleResultRate);
+            toReturnRates.addAll(multipleResultRate);
+		}
+		else if(sourceCurrency.isEmpty() && destinationCurrency.isEmpty()){
+            multipleResultRate = repository.findAll();
+            raiseErrorIfNullOrEmpty(multipleResultRate);
+            toReturnRates.addAll(multipleResultRate);
+		}
+		return toReturnRates;
     }
 
     @Override
