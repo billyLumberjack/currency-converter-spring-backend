@@ -1,7 +1,7 @@
 package com.exmachina.sam.currency.scheduledtasks.helpers;
 
-import com.exmachina.sam.currency.entities.Rate;
-import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
+import com.exmachina.sam.currency.rates.Rate;
+import com.exmachina.sam.currency.scheduledtasks.models.ThirdPartyRates;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

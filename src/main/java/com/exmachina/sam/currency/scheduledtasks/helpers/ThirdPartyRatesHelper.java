@@ -1,6 +1,6 @@
 package com.exmachina.sam.currency.scheduledtasks.helpers;
 
-import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
+import com.exmachina.sam.currency.scheduledtasks.models.ThirdPartyRates;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;

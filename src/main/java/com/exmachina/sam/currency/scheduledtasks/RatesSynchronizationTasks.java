@@ -2,11 +2,11 @@ package com.exmachina.sam.currency.scheduledtasks;
 
 import java.util.*;
 
-import com.exmachina.sam.currency.entities.Rate;
+import com.exmachina.sam.currency.rates.Rate;
 import com.exmachina.sam.currency.scheduledtasks.helpers.RatesMapper;
 import com.exmachina.sam.currency.scheduledtasks.helpers.ThirdPartyRatesHelper;
-import com.exmachina.sam.currency.scheduledtasks.pojos.ThirdPartyRates;
-import com.exmachina.sam.currency.services.interfaces.RateService;
+import com.exmachina.sam.currency.scheduledtasks.models.ThirdPartyRates;
+import com.exmachina.sam.currency.rates.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
